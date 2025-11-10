@@ -1,0 +1,41 @@
+{
+  "about": {
+    "description": [
+      "I am a front-end developer born in 1999 in Bitola, Macedonia.",
+      "I specialize in building modern, responsive web interfaces using React, Vite, and Three.js."
+    ]
+  },
+  "workExperience": [
+    {
+      "period": "November 2022 - August 2023",
+      "company": "Anant Macedonia",
+      "role": "Front-end Developer"
+    },
+    {
+      "period": "October 2023 - July 2024",
+      "company": "Creative Labs",
+      "role": "Front-end Developer"
+    },
+    {
+      "period": "November 2024 - Present",
+      "company": "Vorhol LTD",
+      "role": "TypeScript Developer"
+    },
+    {
+      "period": "September 2021 - June 2022",
+      "company": "Veeva Systems",
+      "role": "JavaScript Developer"
+    }
+  ],
+  "technicalSkills": {
+    "Programming Languages": ["JavaScript", "TypeScript"],
+    "Web Frameworks/Libraries": ["ReactJS", "NextJS", "GatsbyJS", "jQuery", "HTML5", "VueJS", "NuxtJS", "PixiJS"],
+    "UI Frameworks/Libraries": ["CSS/SCSS3", "Tailwind CSS", "MUI", "Bootstrap"],
+    "API Development": ["RESTful API", "GraphQL"],
+    "Version Control": ["GitLab", "GitHub", "BitBucket"],
+    "Tools": ["Terminal", "Webpack", "Figma", "Jest", "React Testing Library"],
+    "Runtime Environments": ["Node.JS"]
+  },
+  "location": "Bitola, Macedonia"
+}
+
