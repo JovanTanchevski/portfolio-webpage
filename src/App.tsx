@@ -35,8 +35,8 @@ function App() {
     switch (currentSection) {
       case 'home':
         return <Home />;
-      case 'projects':
-        return <Projects />;
+      // case 'projects':
+      //   return <Projects />;
       case 'info':
         return <Info />;
       case 'contact':

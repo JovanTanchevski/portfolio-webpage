@@ -11,7 +11,6 @@ interface SidebarProps {
 function Sidebar({ currentSection, onSectionChange, isOpen, onToggle }: SidebarProps) {
   const sections: { id: Section; label: string; icon: string }[] = [
     { id: 'home', label: 'Home', icon: 'fa-home' },
-    { id: 'projects', label: 'Projects', icon: 'fa-folder' },
     { id: 'info', label: 'Info', icon: 'fa-info-circle' },
     { id: 'contact', label: 'Contact', icon: 'fa-envelope' },
     { id: 'faq', label: 'FAQ', icon: 'fa-question-circle' },
