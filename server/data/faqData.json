@@ -1,0 +1,8 @@
+[
+  { "question": "Who are you?", "answer": "I am a front-end developer born in 1999 in Bitola, Macedonia." },
+  { "question": "What do you do?", "answer": "I build modern, responsive web interfaces using React, Vite, and Three.js." },
+  { "question": "What technologies do you use?", "answer": "React, Tailwind, TypeScript, and Node." },
+  { "question": "Where are you based?", "answer": "Bitola, Macedonia." },
+  { "question": "Can I contact you?", "answer": "Yes, via LinkedIn, GitHub, or by email directly from the sidebar links." }
+]
+
