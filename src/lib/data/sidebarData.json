@@ -1,0 +1,49 @@
+{
+  "sections": [
+    { "id": "home", "label": "Home", "icon": "fa-home" },
+    { "id": "projects", "label": "Projects", "icon": "fa-folder" },
+    { "id": "info", "label": "Info", "icon": "fa-info-circle" },
+    { "id": "contact", "label": "Contact", "icon": "fa-envelope" },
+    { "id": "faq", "label": "FAQ", "icon": "fa-question-circle" }
+  ],
+  "socialLinks": [
+    {
+      "label": "GitHub",
+      "icon": "fab fa-github",
+      "href": "https://github.com/jovantanchevski",
+      "target": "_blank"
+    },
+    {
+      "label": "GitLab",
+      "icon": "fab fa-gitlab",
+      "href": "https://gitlab.com/jovantanchevski",
+      "target": "_blank"
+    },
+    {
+      "label": "LinkedIn",
+      "icon": "fab fa-linkedin",
+      "href": "https://linkedin.com/in/jovantanchevski",
+      "target": "_blank"
+    },
+    {
+      "label": "Download CV",
+      "icon": "fas fa-download",
+      "href": "env:VITE_CV_URL",
+      "fallback": "/cv.pdf",
+      "download": true
+    },
+    {
+      "label": "Call",
+      "icon": "fas fa-phone",
+      "href": "env:VITE_PHONE",
+      "prefix": "tel:"
+    },
+    {
+      "label": "Email",
+      "icon": "fas fa-envelope",
+      "href": "env:VITE_EMAIL",
+      "prefix": "mailto:"
+    }
+  ]
+}
+

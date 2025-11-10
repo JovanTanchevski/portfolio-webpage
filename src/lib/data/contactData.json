@@ -1,0 +1,25 @@
+{
+  "description": "Feel free to reach out via email, LinkedIn, or GitHub. I'm always open to discussing new projects and opportunities.",
+  "contacts": [
+    {
+      "type": "Email",
+      "label": "Email",
+      "href": "mailto",
+      "useEnv": "VITE_EMAIL",
+      "display": "email"
+    },
+    {
+      "type": "LinkedIn",
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/jovantanchevski/",
+      "display": "linkedin.com/in/jovantanchevski/"
+    },
+    {
+      "type": "GitHub",
+      "label": "GitHub",
+      "href": "https://github.com/jovantanchevski",
+      "display": "github.com/jovantanchevski"
+    }
+  ]
+}
+
