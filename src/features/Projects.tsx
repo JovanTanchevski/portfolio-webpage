@@ -1,33 +1,9 @@
+import projectsData from '../lib/data/projectsData.json';
 import { Project } from '../lib/types';
 
 // Projects section component - displays portfolio projects
 function Projects() {
-  const projects: Project[] = [
-    {
-      id: '1',
-      title: 'Project One',
-      description: 'A modern web application built with React and TypeScript.',
-      technologies: ['React', 'TypeScript', 'Tailwind'],
-      link: 'https://example.com',
-      github: 'https://github.com',
-    },
-    {
-      id: '2',
-      title: 'Project Two',
-      description: 'An interactive dashboard with real-time data visualization.',
-      technologies: ['React', 'Three.js', 'Node.js'],
-      link: 'https://example.com',
-      github: 'https://github.com',
-    },
-    {
-      id: '3',
-      title: 'Project Three',
-      description: 'A mobile-responsive portfolio website with animated backgrounds.',
-      technologies: ['React', 'Vite', 'Tailwind'],
-      link: 'https://example.com',
-      github: 'https://github.com',
-    },
-  ];
+  const projects = projectsData as Project[];
 
   return (
     <div className="h-full flex flex-col z-10 relative overflow-hidden">
@@ -84,4 +60,3 @@ function Projects() {
 }
 
 export default Projects;
-
