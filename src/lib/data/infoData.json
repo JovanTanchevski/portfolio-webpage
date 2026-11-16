@@ -2,29 +2,33 @@
   "about": {
     "description": [
       "I am a front-end developer born in 1999 in Bitola, Macedonia.",
-      "I specialize in building modern, responsive web interfaces using React, Vite, and Three.js."
+      "I specialize in building modern, responsive web interfaces with React, TypeScript and Three.js, and I build interactive iGaming and animation-based games with PixiJS."
     ]
   },
   "workExperience": [
     {
       "period": "November 2024 - Present",
       "company": "Vorhol LTD",
-      "role": "TypeScript Developer"
+      "role": "TypeScript Developer",
+      "description": "Developed and optimized interactive iGaming applications and animation-based games using JavaScript and TypeScript, specializing in high-performance game development with PixiJS. Implemented engaging visual effects and smooth gameplay mechanics, while collaborating in an Agile & Scrum environment."
     },
     {
       "period": "October 2023 - July 2024",
       "company": "Creative Labs",
-      "role": "Front-end Developer"
+      "role": "Front-end Developer",
+      "description": "Worked on multiple client-side projects using VueJS, NuxtJS and React. Also worked on projects using WordPress and PHP, and created a custom CMS with Strapi.io and WordPress."
     },
     {
       "period": "November 2022 - August 2023",
       "company": "Anant Macedonia",
-      "role": "Front-end Developer"
+      "role": "Front-end Developer",
+      "description": "Worked on three projects: two internal initiatives and one client project. Held weekly client presentations with regular updates on project progress, in an Agile environment with daily standups and sprint planning and retrospectives."
     },
     {
       "period": "September 2021 - June 2022",
-      "company": "Veeva Systems",
-      "role": "JavaScript Developer"
+      "company": "Taskforce",
+      "role": "Customer Care Rep",
+      "description": "Customer care representative for US hospitals. Handled patient calls and scheduled appointments for their visits."
     }
   ],
   "technicalSkills": {
@@ -50,7 +54,8 @@
     ],
     "API Development": [
       "RESTful API",
-      "GraphQL"
+      "GraphQL",
+      "Strapi (Headless CMS)"
     ],
     "Version Control": [
       "GitLab",
@@ -68,5 +73,24 @@
       "Node.JS"
     ]
   },
-  "location": "Bitola, Macedonia"
+  "location": "Bitola, Macedonia",
+  "education": [
+    {
+      "school": "Brainster Academy",
+      "program": "Front End"
+    },
+    {
+      "school": "Faculty of Law, Bitola",
+      "program": "Bachelor Degree"
+    }
+  ],
+  "softSkills": [
+    "Agile/Scrum Methodology",
+    "Git Branch-Feature workflow",
+    "Communication",
+    "Problem-Solving",
+    "Attention to Detail",
+    "Time Management",
+    "Teamwork"
+  ]
 }

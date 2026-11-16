@@ -12,7 +12,12 @@ const info = readJson('../../../src/lib/data/infoData.json');
 const contact = readJson('../../../src/lib/data/contactData.json');
 
 const experience = info.workExperience
-  .map((job: { period: string; company: string; role: string }) => `- ${job.role} at ${job.company} (${job.period})`)
+  .map((job: { period: string; company: string; role: string; description: string }) =>
+      `- ${job.role} at ${job.company} (${job.period}): ${job.description}`)
+  .join('\n');
+
+const education = info.education
+  .map((item: { school: string; program: string }) => `- ${item.program}, ${item.school}`)
   .join('\n');
 
 const skills = Object.entries(info.technicalSkills as Record<string, string[]>)
@@ -38,8 +43,13 @@ Location: ${info.location}
 Work experience:
 ${experience}
 
+Education:
+${education}
+
 Technical skills:
 ${skills}
+
+Working style: ${info.softSkills.join(', ')}
 
 Links:
 ${links}

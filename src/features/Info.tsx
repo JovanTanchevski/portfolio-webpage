@@ -32,12 +32,25 @@ function Info() {
                 <p className="font-mono text-xs text-muted mb-1">{exp.period}</p>
                 <p className="text-lg font-semibold text-fg">{exp.company}</p>
                 <p className="text-muted">{exp.role}</p>
+                <p className="text-sm text-muted/90 mt-2 leading-relaxed">{exp.description}</p>
               </li>
             ))}
           </ol>
         </section>
 
         {/* Technical Skills Section */}
+        <section>
+          <h2 className="font-mono text-sm uppercase tracking-widest text-accent mb-4">Education</h2>
+          <ul className="space-y-3">
+            {infoData.education.map((item) => (
+              <li key={item.school}>
+                <p className="font-semibold text-fg">{item.school}</p>
+                <p className="text-sm">{item.program}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <section>
           <h2 className="font-mono text-sm uppercase tracking-widest text-accent mb-4">
             Technical Skills
@@ -57,6 +70,22 @@ function Info() {
                   ))}
                 </div>
               </div>
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <h2 className="font-mono text-sm uppercase tracking-widest text-accent mb-4">
+            Working Style
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {infoData.softSkills.map((skill) => (
+              <span
+                key={skill}
+                className="px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs text-fg"
+              >
+                {skill}
+              </span>
             ))}
           </div>
         </section>
