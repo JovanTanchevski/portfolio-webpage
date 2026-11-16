@@ -71,13 +71,23 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onT
               <p className="font-semibold text-fg leading-tight">Jovan Tanchevski</p>
               <p className="font-mono text-xs text-muted mt-1">Front-end Developer</p>
             </div>
-            <button
-              className="md:hidden text-muted hover:text-fg transition-colors w-11 h-11 -mt-2 -mr-3 flex items-center justify-center"
-              onClick={() => onToggle(false)}
-              aria-label="Close menu"
-            >
-              <i className="fas fa-times text-xl"></i>
-            </button>
+            <div className="flex items-center -mt-1 -mr-2">
+              <button
+                onClick={onToggleTheme}
+                className="text-muted hover:text-accent transition-colors w-10 h-10 flex items-center justify-center rounded-lg"
+                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+                title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+              >
+                <i className={`fas ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`}></i>
+              </button>
+              <button
+                className="md:hidden text-muted hover:text-fg transition-colors w-10 h-10 flex items-center justify-center"
+                onClick={() => onToggle(false)}
+                aria-label="Close menu"
+              >
+                <i className="fas fa-times text-xl"></i>
+              </button>
+            </div>
           </div>
 
           <nav className="flex flex-col space-y-1 flex-1" aria-label="Main">
@@ -112,16 +122,6 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onT
           </nav>
 
           <div className="mt-auto pt-6 border-t border-line">
-            <button
-              onClick={onToggleTheme}
-              className="w-full flex items-center gap-3 px-4 py-3 mb-3 rounded-lg text-muted hover:text-fg hover:bg-fg/5 transition-colors"
-              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            >
-              <i className={`fas ${theme === 'dark' ? 'fa-sun' : 'fa-moon'} w-5 text-center`}></i>
-              <span className="text-sm font-medium">
-                {theme === 'dark' ? 'Light mode' : 'Dark mode'}
-              </span>
-            </button>
             <div className="grid grid-cols-6 gap-1">
               {sidebarData.socialLinks.map((link, idx) => (
                 <a
