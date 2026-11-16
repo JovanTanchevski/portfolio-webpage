@@ -1,99 +1,115 @@
-import { lazy, Suspense, useState, useEffect } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import Sidebar from './ui/Sidebar.tsx';
+import ChatButton from './ui/ChatButton';
 import Home from './features/Home.tsx';
 import Info from './features/Info.tsx';
 import Contact from './features/Contact.tsx';
 import { Section } from './lib/types';
 import { useTheme } from './lib/hooks/useTheme';
+import { useLocalStorage } from './lib/hooks/useLocalStorage';
 
-// Heavy parts are split into their own chunks and loaded on demand:
-// Three.js background, Projects, and FAQ (which includes the chat)
 const Background = lazy(() => import('./ui/Background'));
 const Projects = lazy(() => import('./features/Projects.tsx'));
-const FAQ = lazy(() => import('./features/FAQ'));
+const FAQChat = lazy(() => import('./ui/FAQChat'));
 
+const SECTION_ORDER: Section[] = ['home', 'projects', 'info', 'contact'];
 
-// Main app component - handles section switching and layout
+const isSection = (value: string): value is Section =>
+  (SECTION_ORDER as string[]).includes(value);
+
 function App() {
   const { theme, toggleTheme } = useTheme();
   const [currentSection, setCurrentSection] = useState<Section>('home');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useLocalStorage('faq-chat-open', false);
+  const scrollRef = useRef<HTMLElement>(null);
 
-  // Handle section change with fade transition
-  const handleSectionChange = (section: Section) => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentSection(section);
-      setIsTransitioning(false);
-    }, 150);
-  };
+  const scrollToSection = useCallback((section: Section, instant = false) => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById(section)?.scrollIntoView({
+      behavior: instant || reduceMotion ? 'auto' : 'smooth',
+      block: 'start',
+    });
+  }, []);
 
-  // Close sidebar on desktop when section changes
+  // Highlight the section that is currently crossing the upper part of the viewport
   useEffect(() => {
-    if (window.innerWidth >= 768) {
-      setIsSidebarOpen(false);
+    const container = scrollRef.current;
+    if (!container) return;
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const line = container.getBoundingClientRect().top + container.clientHeight * 0.4;
+      let active: Section = 'home';
+      for (const id of SECTION_ORDER) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) active = id;
+      }
+      setCurrentSection(active);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    container.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      container.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  // Keep the URL hash in sync so a section can be linked directly
+  useEffect(() => {
+    const hash = currentSection === 'home' ? '' : `#${currentSection}`;
+    if (window.location.hash !== hash) {
+      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${hash}`);
     }
   }, [currentSection]);
 
-  // Render current section component
-  const renderSection = () => {
-    switch (currentSection) {
-      case 'home':
-        return <Home onNavigate={handleSectionChange} />;
-      case 'projects':
-        return <Projects />;
-      case 'info':
-        return <Info />;
-      case 'contact':
-        return <Contact />;
-      case 'faq':
-        return <FAQ />;
-      default:
-        return <Home onNavigate={handleSectionChange} />;
-    }
-  };
+  // Jump to the section named in the URL on first load
+  useEffect(() => {
+    const target = window.location.hash.replace('#', '');
+    if (isSection(target)) scrollToSection(target, true);
+  }, [scrollToSection]);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
-      {/* Three.js animated background */}
+    <div className="relative w-screen h-[100dvh] overflow-hidden">
       <Suspense fallback={null}>
         <Background />
       </Suspense>
-      
-      {/* Sidebar navigation */}
+
       <Sidebar
         currentSection={currentSection}
-        onSectionChange={handleSectionChange}
+        onSectionChange={scrollToSection}
         isOpen={isSidebarOpen}
         onToggle={setIsSidebarOpen}
         theme={theme}
         onToggleTheme={toggleTheme}
+        onOpenChat={() => setIsChatOpen(true)}
       />
-      
-      {/* Main content area */}
-      <main className="absolute inset-0 pl-0 md:pl-64 transition-all duration-300 overflow-hidden">
-        <div className="h-full w-full p-4 md:p-8 overflow-hidden">
-          <div
-            className={`h-full transition-opacity duration-300 ${
-              isTransitioning ? 'opacity-0' : 'opacity-100'
-            }`}
-          >
-            <Suspense
-              fallback={
-                <div className="h-full flex items-center justify-center font-mono text-sm text-muted">
-                  Loading...
-                </div>
-              }
-            >
-              {renderSection()}
-            </Suspense>
-          </div>
-        </div>
+
+      <main ref={scrollRef} className="absolute inset-0 md:pl-64 overflow-y-auto overflow-x-hidden">
+        <Home onNavigate={scrollToSection} />
+        <Suspense fallback={<section id="projects" className="min-h-[100dvh]" />}>
+          <Projects />
+        </Suspense>
+        <Info />
+        <Contact />
       </main>
+
+      {isChatOpen ? (
+        <Suspense fallback={null}>
+          <FAQChat onClose={() => setIsChatOpen(false)} />
+        </Suspense>
+      ) : (
+        <ChatButton onClick={() => setIsChatOpen(true)} />
+      )}
     </div>
   );
 }
 
 export default App;
-

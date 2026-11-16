@@ -1,5 +1,5 @@
 // Type definitions for the application
-export type Section = 'home' | 'projects' | 'info' | 'contact' | 'faq';
+export type Section = 'home' | 'projects' | 'info' | 'contact';
 
 export interface FAQItem {
   question: string;

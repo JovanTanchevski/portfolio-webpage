@@ -10,10 +10,11 @@ interface SidebarProps {
   onToggle: (open: boolean) => void;
   theme: Theme;
   onToggleTheme: () => void;
+  onOpenChat: () => void;
 }
 
 // Sidebar navigation component with icons and links
-function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onToggleTheme }: SidebarProps) {
+function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onToggleTheme, onOpenChat }: SidebarProps) {
   // Swipe left on the open drawer to close it
   const touchStartX = useRef<number | null>(null);
 
@@ -119,6 +120,16 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onT
                 </button>
               );
             })}
+            <button
+              onClick={() => {
+                onOpenChat();
+                onToggle(false);
+              }}
+              className="flex items-center gap-3 px-4 py-3 rounded-lg text-left text-muted hover:text-fg hover:bg-fg/5 transition-all duration-200"
+            >
+              <i className="fas fa-comments w-5 text-center"></i>
+              <span className="text-sm font-medium">Ask me</span>
+            </button>
           </nav>
 
           <div className="mt-auto pt-6 border-t border-line">

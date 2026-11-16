@@ -3,8 +3,7 @@
     { "id": "home", "label": "Home", "icon": "fa-home" },
     { "id": "projects", "label": "Projects", "icon": "fa-folder" },
     { "id": "info", "label": "Info", "icon": "fa-info-circle" },
-    { "id": "contact", "label": "Contact", "icon": "fa-envelope" },
-    { "id": "faq", "label": "FAQ", "icon": "fa-question-circle" }
+    { "id": "contact", "label": "Contact", "icon": "fa-envelope" }
   ],
   "socialLinks": [
     {
