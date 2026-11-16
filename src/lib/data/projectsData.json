@@ -1,27 +1,72 @@
 [
   {
     "id": "1",
-    "title": "Project One",
-    "description": "A modern web application built with React and TypeScript.",
-    "technologies": ["React", "TypeScript", "Tailwind"],
-    "link": "https://example.com",
-    "github": "https://github.com"
+    "title": "Furwood Store",
+    "description": "Online furniture store built with React, TypeScript and CSS.",
+    "technologies": [
+      "React",
+      "TypeScript",
+      "CSS"
+    ],
+    "link": "https://onlineshop-furwoodstore.netlify.app/",
+    "image": "projects/furwood.jpg"
   },
   {
     "id": "2",
-    "title": "Project Two",
-    "description": "An interactive dashboard with real-time data visualization.",
-    "technologies": ["React", "Three.js", "Node.js"],
-    "link": "https://example.com",
-    "github": "https://github.com"
+    "title": "Coza Store",
+    "description": "Small e-commerce site in the style of ZARA where visitors can browse and search clothes and accessories.",
+    "technologies": [
+      "TypeScript",
+      "SASS",
+      "NextJS"
+    ],
+    "link": "https://coza-store-ecommerce.netlify.app/",
+    "image": "projects/coza-store.jpg"
   },
   {
     "id": "3",
-    "title": "Project Three",
-    "description": "A mobile-responsive portfolio website with animated backgrounds.",
-    "technologies": ["React", "Vite", "Tailwind"],
-    "link": "https://example.com",
-    "github": "https://github.com"
+    "title": "Bike Store",
+    "description": "Bike store website developed with React and TypeScript.",
+    "technologies": [
+      "React",
+      "TypeScript"
+    ],
+    "link": "https://jovanbtbikestore.netlify.app/",
+    "image": "projects/bike-store.jpg"
+  },
+  {
+    "id": "4",
+    "title": "Brainster Academy",
+    "description": "Website where people can browse all of the academies hosted by Brainster.",
+    "technologies": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    "link": "https://jovantanchevski-project01.netlify.app/",
+    "image": "projects/brainster.jpg"
+  },
+  {
+    "id": "5",
+    "title": "Company Demo Site",
+    "description": "Company demo website with a blog, services, contact and about pages.",
+    "technologies": [
+      "HTML",
+      "CSS"
+    ],
+    "link": "https://jovan-tanchevski-blog-site.netlify.app/",
+    "image": "projects/blog-site.jpg"
+  },
+  {
+    "id": "6",
+    "title": "Artists App",
+    "description": "Mobile-only app where guests can discover art pieces and street artists get a web space to showcase their work and track their income.",
+    "technologies": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    "link": "https://artists-app-jovantanchevski.netlify.app/",
+    "image": "projects/artists-app.jpg"
   }
 ]
-
