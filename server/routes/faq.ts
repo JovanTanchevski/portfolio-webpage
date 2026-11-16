@@ -41,6 +41,12 @@ router.post('/ask', askRateLimiter, sanitizeMessage, (req, res) => {
   try {
     const { message } = req.body;
     const answer = findBestAnswer(message);
+
+    // Keep a short per-session transcript (last 20 messages)
+    const history = req.session.history ?? [];
+    history.push({ role: 'user', content: message }, { role: 'assistant', content: answer });
+    req.session.history = history.slice(-20);
+
     res.json({ answer });
   } catch (error) {
     console.error('Error processing FAQ request:', error);

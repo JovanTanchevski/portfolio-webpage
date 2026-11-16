@@ -34,6 +34,7 @@ function FAQChat() {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
       const response = await fetch(`${apiUrl}/api/ask`, {
         method: 'POST',
+        credentials: 'include', // send the session cookie
         headers: {
           'Content-Type': 'application/json',
         },

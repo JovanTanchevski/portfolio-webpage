@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import { sessionMiddleware } from './middleware/session.js';
 import faqRoutes from './routes/faq.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -34,6 +35,7 @@ app.use(
   })
 );
 app.use(express.json({ limit: '10kb' }));
+app.use(sessionMiddleware);
 
 // API routes
 app.use('/api', faqRoutes);
