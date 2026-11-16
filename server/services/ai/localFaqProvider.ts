@@ -10,29 +10,30 @@ export const FAQ_DATA: FaqItem[] = JSON.parse(
 );
 
 export const FALLBACK_ANSWER =
-  "I'm not sure how to answer that. Try asking about who I am, what I do, or my technologies.";
+  "I'm not sure how to answer that. Try asking about who I am, what I do, my experience, my technologies or how to contact me.";
 
-// Keyword matching against faqData.json. Works fully offline.
+const STOP_WORDS = new Set(['the', 'you', 'your', 'are', 'can', 'what', 'how', 'and', 'for', 'with', 'this', 'that', 'have', 'does', 'do', 'did', 'me', 'my', 'is', 'it', 'of', 'to', 'in', 'on', 'at', 'be', 'any']);
+
+const tokenize = (text: string) =>
+  text
+    .toLowerCase()
+    .split(/[^a-z0-9.+#]+/)
+    .filter((word) => word.length > 1 && !STOP_WORDS.has(word));
+
 function findBestAnswer(message: string): string | null {
-  const lowerMessage = message.toLowerCase();
+  const words = new Set(tokenize(message));
+  let best: { score: number; answer: string } | null = null;
 
   for (const item of FAQ_DATA) {
-    const lowerQuestion = item.question.toLowerCase();
-    const questionWords = lowerQuestion.split(/\s+/);
-    const matchCount = questionWords.filter(
-      (word: string) => word.length > 3 && lowerMessage.includes(word)
-    ).length;
+    const vocabulary = new Set([...tokenize(item.question), ...(item.keywords ?? [])]);
+    let score = 0;
+    for (const word of words) if (vocabulary.has(word)) score++;
+    if (message.toLowerCase().includes(item.question.toLowerCase())) score += 3;
 
-    if (
-      matchCount >= 2 ||
-      lowerMessage.includes(lowerQuestion) ||
-      lowerQuestion.includes(lowerMessage)
-    ) {
-      return item.answer;
-    }
+    if (score > 0 && (!best || score > best.score)) best = { score, answer: item.answer };
   }
 
-  return null;
+  return best ? best.answer : null;
 }
 
 export class LocalFaqProvider implements AnswerProvider {
@@ -42,14 +43,12 @@ export class LocalFaqProvider implements AnswerProvider {
     const direct = findBestAnswer(message);
     if (direct) return direct;
 
-    // Follow-ups like "and where?" or "tell me more" have no keywords of their own,
-    // so retry with the previous user question as context.
     const lastQuestion = [...history].reverse().find((m) => m.role === 'user');
-    if (lastQuestion) {
+    if (lastQuestion && message.split(/\s+/).length <= 4) {
       if (/\b(more|else|another|elaborate|details?)\b/i.test(message)) {
         const lastAnswer = [...history].reverse().find((m) => m.role === 'assistant');
         if (lastAnswer) {
-          return `${lastAnswer.content} You can find more on the Info page, or reach out via the Contact page.`;
+          return `${lastAnswer.content} You can find more in the Info section, or reach out via Contact.`;
         }
       }
 

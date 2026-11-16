@@ -1,8 +1,37 @@
 [
-  { "question": "Who are you?", "answer": "I am a front-end developer born in 1999 in Bitola, Macedonia." },
-  { "question": "What do you do?", "answer": "I build modern, responsive web interfaces using React, Vite, and Three.js." },
-  { "question": "What technologies do you use?", "answer": "React, Tailwind, TypeScript, and Node." },
-  { "question": "Where are you based?", "answer": "Bitola, Macedonia." },
-  { "question": "Can I contact you?", "answer": "Yes, via LinkedIn, GitHub, or by email directly from the sidebar links." }
+  {
+    "question": "Who are you?",
+    "answer": "I am Jovan Tanchevski, a front-end developer born in 1999 in Bitola, Macedonia.",
+    "keywords": ["who", "yourself", "name", "about", "introduce", "jovan"]
+  },
+  {
+    "question": "What do you do?",
+    "answer": "I build modern, responsive web interfaces using React, Vite, and Three.js.",
+    "keywords": ["do", "job", "profession", "role", "occupation", "developer", "build", "doing"]
+  },
+  {
+    "question": "What technologies do you use?",
+    "answer": "TypeScript and JavaScript with React, Next.js, Vue, Tailwind CSS and Node.js. The Info section has the full list.",
+    "keywords": ["technologies", "technology", "tech", "stack", "skills", "skill", "framework", "frameworks", "tools", "languages", "react", "typescript", "javascript", "tailwind", "node", "vue", "use"]
+  },
+  {
+    "question": "What is your work experience?",
+    "answer": "I currently work as a TypeScript Developer at Vorhol LTD (since November 2024). Before that I was a Front-end Developer at Creative Labs and Anant Macedonia, and a JavaScript Developer at Veeva Systems.",
+    "keywords": ["experience", "career", "company", "companies", "employer", "work", "worked", "before", "history", "vorhol", "veeva", "creative", "anant", "currently", "job"]
+  },
+  {
+    "question": "Where can I see your projects?",
+    "answer": "Check the Projects section on this page, or browse my GitHub profile from the sidebar.",
+    "keywords": ["projects", "project", "portfolio", "github", "samples", "showcase", "built"]
+  },
+  {
+    "question": "Where are you based?",
+    "answer": "Bitola, Macedonia.",
+    "keywords": ["where", "location", "live", "based", "from", "city", "country", "born", "macedonia", "bitola"]
+  },
+  {
+    "question": "Can I contact you?",
+    "answer": "Yes, via LinkedIn, GitHub, or by email directly from the sidebar links or the Contact section.",
+    "keywords": ["contact", "email", "reach", "hire", "linkedin", "phone", "call", "message", "touch", "cv", "resume"]
+  }
 ]
-
