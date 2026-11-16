@@ -12,8 +12,8 @@ const info = readJson('../../../src/lib/data/infoData.json');
 const contact = readJson('../../../src/lib/data/contactData.json');
 
 const experience = info.workExperience
-  .map((job: { period: string; company: string; role: string; description: string }) =>
-      `- ${job.role} at ${job.company} (${job.period}): ${job.description}`)
+  .map((job: { period: string; company: string; role: string; description?: string }) =>
+      `- ${job.role} at ${job.company} (${job.period})${job.description ? `: ${job.description}` : ""}`)
   .join('\n');
 
 const education = info.education
