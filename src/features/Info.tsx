@@ -9,15 +9,24 @@ function Info() {
         {/* About Section */}
         <section>
           <h2 className="font-mono text-sm uppercase tracking-widest text-accent mb-4">About</h2>
-          {infoData.about.description.map((text, idx) => (
-            <p key={idx} className="mb-3 text-fg/90 leading-relaxed">
-              {text}
+          <div className="flex flex-col sm:flex-row gap-6 items-start">
+            <img
+              src={`${import.meta.env.BASE_URL}profile.jpg`}
+              alt="Jovan Tanchevski"
+              className="w-36 sm:w-40 aspect-[4/5] object-cover object-top rounded-2xl border border-accent/40 ring-4 ring-accent/10 shrink-0"
+            />
+            <div>
+            {infoData.about.description.map((text, idx) => (
+              <p key={idx} className="mb-3 text-fg/90 leading-relaxed">
+                {text}
+              </p>
+            ))}
+            <p className="text-sm mt-2">
+              <i className="fas fa-location-dot mr-2 text-accent"></i>
+              {infoData.location}
             </p>
-          ))}
-          <p className="text-sm mt-2">
-            <i className="fas fa-location-dot mr-2 text-accent"></i>
-            {infoData.location}
-          </p>
+            </div>
+          </div>
         </section>
 
         {/* Work Experience Section */}
@@ -32,7 +41,9 @@ function Info() {
                 <p className="font-mono text-xs text-muted mb-1">{exp.period}</p>
                 <p className="text-lg font-semibold text-fg">{exp.company}</p>
                 <p className="text-muted">{exp.role}</p>
-                <p className="text-sm text-muted/90 mt-2 leading-relaxed">{exp.description}</p>
+                {'description' in exp && (
+                  <p className="text-sm text-muted/90 mt-2 leading-relaxed">{exp.description}</p>
+                )}
               </li>
             ))}
           </ol>
