@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
+import { useLocalStorage } from '../lib/hooks/useLocalStorage';
 
 // FAQ Chat component - floating chat bubble that appears in FAQ section
 function FAQChat() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useLocalStorage('faq-chat-open', false);
   const [messages, setMessages] = useState<Array<{ type: 'user' | 'bot'; text: string }>>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);

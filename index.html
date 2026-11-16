@@ -4,6 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Apply the saved theme before first paint to avoid a flash of the wrong theme
+      try {
+        var saved = JSON.parse(localStorage.getItem('theme'));
+        var theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.className = theme;
+      } catch (e) {
+        document.documentElement.className = 'dark';
+      }
+    </script>
     <title>Jovan Tanchevski | Front-end Developer</title>
     <meta name="description" content="Portfolio of Jovan Tanchevski, front-end and TypeScript developer from Bitola, Macedonia." />
     <meta name="color-scheme" content="dark light" />

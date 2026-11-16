@@ -7,9 +7,11 @@ import Info from './features/Info.tsx';
 import Contact from './features/Contact.tsx';
 import FAQ from './features/FAQ';
 import { Section } from './lib/types';
+import { useTheme } from './lib/hooks/useTheme';
 
 // Main app component - handles section switching and layout
 function App() {
+  const { theme, toggleTheme } = useTheme();
   const [currentSection, setCurrentSection] = useState<Section>('home');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -59,6 +61,8 @@ function App() {
         onSectionChange={handleSectionChange}
         isOpen={isSidebarOpen}
         onToggle={setIsSidebarOpen}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
       
       {/* Main content area */}

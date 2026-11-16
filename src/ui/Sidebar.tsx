@@ -1,4 +1,5 @@
 import { Section } from '../lib/types';
+import { Theme } from '../lib/hooks/useTheme';
 import sidebarData from '../lib/data/sidebarData.json';
 
 interface SidebarProps {
@@ -6,10 +7,12 @@ interface SidebarProps {
   onSectionChange: (section: Section) => void;
   isOpen: boolean;
   onToggle: (open: boolean) => void;
+  theme: Theme;
+  onToggleTheme: () => void;
 }
 
 // Sidebar navigation component with icons and links
-function Sidebar({ currentSection, onSectionChange, isOpen, onToggle }: SidebarProps) {
+function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onToggleTheme }: SidebarProps) {
   const handleOverlayClick = () => {
     if (isOpen) {
       onToggle(false);
@@ -92,6 +95,16 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle }: SidebarP
           </nav>
 
           <div className="mt-auto pt-6 border-t border-line">
+            <button
+              onClick={onToggleTheme}
+              className="w-full flex items-center gap-3 px-4 py-3 mb-3 rounded-lg text-muted hover:text-fg hover:bg-fg/5 transition-colors"
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              <i className={`fas ${theme === 'dark' ? 'fa-sun' : 'fa-moon'} w-5 text-center`}></i>
+              <span className="text-sm font-medium">
+                {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+              </span>
+            </button>
             <div className="grid grid-cols-6 gap-1">
               {sidebarData.socialLinks.map((link, idx) => (
                 <a
