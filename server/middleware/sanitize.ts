@@ -2,7 +2,6 @@ import type { NextFunction, Request, Response } from 'express';
 
 export const MAX_MESSAGE_LENGTH = 500;
 
-// Strips HTML tags, control characters and collapses whitespace
 export function sanitizeText(input: string): string {
   return input
     .replace(/<[^>]*>?/g, '')
@@ -11,7 +10,6 @@ export function sanitizeText(input: string): string {
     .trim();
 }
 
-// Validates and cleans req.body.message before it reaches the route handler
 export function sanitizeMessage(req: Request, res: Response, next: NextFunction) {
   const raw = req.body?.message;
 

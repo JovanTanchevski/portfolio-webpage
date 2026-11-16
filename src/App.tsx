@@ -32,7 +32,6 @@ function App() {
     });
   }, []);
 
-  // Highlight the section that is currently crossing the upper part of the viewport
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
@@ -62,7 +61,6 @@ function App() {
     };
   }, []);
 
-  // Keep the URL hash in sync so a section can be linked directly
   useEffect(() => {
     const hash = currentSection === 'home' ? '' : `#${currentSection}`;
     if (window.location.hash !== hash) {
@@ -70,7 +68,6 @@ function App() {
     }
   }, [currentSection]);
 
-  // Jump to the section named in the URL on first load
   useEffect(() => {
     const target = window.location.hash.replace('#', '');
     if (isSection(target)) scrollToSection(target, true);

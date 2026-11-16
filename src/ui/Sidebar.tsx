@@ -15,7 +15,6 @@ interface SidebarProps {
 
 // Sidebar navigation component with icons and links
 function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onToggleTheme, onOpenChat }: SidebarProps) {
-  // Swipe left on the open drawer to close it
   const touchStartX = useRef<number | null>(null);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -66,7 +65,6 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onT
         `}
       >
         <div className="flex flex-col h-full p-6 overflow-y-auto pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-          {/* Brand + mobile close button */}
           <div className="flex items-start justify-between mb-10">
             <div>
               <p className="font-semibold text-fg leading-tight">Jovan Tanchevski</p>

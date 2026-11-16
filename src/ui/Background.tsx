@@ -3,7 +3,6 @@ import { useRef, useEffect, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Mesh, Vector3 } from 'three';
 
-// Reads the --accent CSS variable and updates when the theme class on <html> changes
 function useAccentColor() {
   const read = () => {
     const [r, g, b] = getComputedStyle(document.documentElement)
@@ -35,7 +34,6 @@ function AnimatedMesh() {
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
   ).current;
   const aspect = useThree((state) => state.viewport.aspect);
-  // Push the ring to the right on wide screens so it frames the content instead of sitting behind it
   const offsetX = aspect > 1.2 ? 2.4 : 0;
 
   // Track mouse movement

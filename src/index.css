@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Theme tokens (space-separated RGB so Tailwind opacity modifiers work) */
 :root,
 :root.dark {
   --base: 8 9 13;
@@ -80,7 +79,6 @@ body {
   background: rgb(var(--muted) / 0.6);
 }
 
-/* Section entrance animation */
 @keyframes rise-in {
   from {
     opacity: 0;

@@ -2,8 +2,6 @@ import { LocalFaqProvider } from './localFaqProvider.js';
 import { LlmProvider } from './llmProvider.js';
 import type { AnswerProvider, ChatMessage } from './types.js';
 
-// Every preset speaks the OpenAI-compatible chat completions API.
-// Groq and Gemini both offer a free tier: create a key and set AI_API_KEY.
 const PRESETS: Record<string, { baseUrl: string; model: string }> = {
   groq: { baseUrl: 'https://api.groq.com/openai/v1', model: 'llama-3.1-8b-instant' },
   gemini: {
@@ -37,7 +35,6 @@ function createProvider(): AnswerProvider {
 
 const provider = createProvider();
 
-// Falls back to the local JSON FAQ if the external service fails, so the chat keeps working
 export async function getAnswer(message: string, history: ChatMessage[]): Promise<string> {
   try {
     return await provider.answer(message, history);

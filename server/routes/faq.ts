@@ -15,7 +15,6 @@ router.post('/ask', askRateLimiter, sanitizeMessage, async (req, res) => {
 
     const answer = await getAnswer(message, history);
 
-    // Keep a short per-session transcript
     history.push({ role: 'user', content: message }, { role: 'assistant', content: answer });
     req.session.history = history.slice(-MAX_HISTORY);
 
@@ -26,12 +25,10 @@ router.post('/ask', askRateLimiter, sanitizeMessage, async (req, res) => {
   }
 });
 
-// Returns the current session's conversation so the chat can be restored after a reload
 router.get('/history', (req, res) => {
   res.json({ history: req.session.history ?? [] });
 });
 
-// Starts a fresh conversation
 router.delete('/history', (req, res) => {
   req.session.history = [];
   res.status(204).end();

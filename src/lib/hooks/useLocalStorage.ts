@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
 
-// useState that persists to localStorage. Safe when storage is blocked or holds bad data.
 export function useLocalStorage<T>(key: string, initialValue: T) {
   const [value, setValue] = useState<T>(() => {
     try {
@@ -18,7 +17,6 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
         try {
           window.localStorage.setItem(key, JSON.stringify(resolved));
         } catch {
-          // storage unavailable - keep the in-memory value only
         }
         return resolved;
       });
