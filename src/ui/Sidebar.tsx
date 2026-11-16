@@ -31,54 +31,68 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle }: SidebarP
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40 md:hidden"
+          className="fixed inset-0 bg-canvas/60 backdrop-blur-sm z-40 md:hidden"
           onClick={handleOverlayClick}
         />
       )}
 
       <aside
         className={`
-          fixed top-0 left-0 h-full w-64 bg-black bg-opacity-80 backdrop-blur-md
-          border-r border-gray-800 z-50
+          fixed top-0 left-0 h-full w-64 bg-surface/80 backdrop-blur-xl
+          border-r border-line z-50
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}
       >
         <div className="flex flex-col h-full p-6">
-          {/* Mobile menu toggle button */}
-          <button
-            className="md:hidden self-end mb-6 text-white hover:text-gray-300 transition-colors"
-            onClick={() => onToggle(!isOpen)}
-          >
-            <i className={`fas ${isOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
-          </button>
+          {/* Brand + mobile close button */}
+          <div className="flex items-start justify-between mb-10">
+            <div>
+              <p className="font-semibold text-fg leading-tight">Jovan Tanchevski</p>
+              <p className="font-mono text-xs text-muted mt-1">Front-end Developer</p>
+            </div>
+            <button
+              className="md:hidden text-muted hover:text-fg transition-colors"
+              onClick={() => onToggle(false)}
+              aria-label="Close menu"
+            >
+              <i className="fas fa-times text-xl"></i>
+            </button>
+          </div>
 
-          <nav className="flex flex-col space-y-4 flex-1">
-            {sidebarData.sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => {
-                  onSectionChange(section.id as Section);
-                  onToggle(false);
-                }}
-                className={`
-                  flex items-center space-x-3 px-4 py-3 rounded
-                  transition-all duration-200
-                  ${
-                    currentSection === section.id
-                      ? 'bg-white bg-opacity-10 text-white'
-                      : 'text-gray-400 hover:text-white hover:bg-white hover:bg-opacity-5'
-                  }
-                `}
-              >
-                <i className={`fas ${section.icon} text-lg`}></i>
-                <span className="font-mono text-sm">{section.label}</span>
-              </button>
-            ))}
+          <nav className="flex flex-col space-y-1 flex-1" aria-label="Main">
+            {sidebarData.sections.map((section) => {
+              const isActive = currentSection === section.id;
+              return (
+                <button
+                  key={section.id}
+                  onClick={() => {
+                    onSectionChange(section.id as Section);
+                    onToggle(false);
+                  }}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`
+                    relative flex items-center gap-3 px-4 py-3 rounded-lg text-left
+                    transition-all duration-200
+                    ${
+                      isActive
+                        ? 'bg-accent/10 text-fg'
+                        : 'text-muted hover:text-fg hover:bg-fg/5'
+                    }
+                  `}
+                >
+                  {isActive && (
+                    <span className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full bg-accent" />
+                  )}
+                  <i className={`fas ${section.icon} w-5 text-center ${isActive ? 'text-accent' : ''}`}></i>
+                  <span className="text-sm font-medium">{section.label}</span>
+                </button>
+              );
+            })}
           </nav>
 
-          <div className="mt-auto pt-6 border-t border-gray-800">
-            <div className="flex flex-col space-y-4">
+          <div className="mt-auto pt-6 border-t border-line">
+            <div className="grid grid-cols-6 gap-1">
               {sidebarData.socialLinks.map((link, idx) => (
                 <a
                   key={idx}
@@ -86,10 +100,11 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle }: SidebarP
                   target={link.target}
                   rel={link.target ? 'noopener noreferrer' : undefined}
                   download={link.download}
-                  className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors"
+                  aria-label={link.label}
+                  title={link.label}
+                  className="flex items-center justify-center h-10 rounded-lg text-muted hover:text-accent hover:bg-fg/5 transition-colors"
                 >
-                  <i className={`${link.icon} text-xl`}></i>
-                  <span className="font-mono text-sm">{link.label}</span>
+                  <i className={`${link.icon} text-base`}></i>
                 </a>
               ))}
             </div>
@@ -99,10 +114,11 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle }: SidebarP
 
       {!isOpen && (
         <button
-          className="md:hidden fixed top-4 left-4 z-50 text-white bg-black bg-opacity-50 p-2 rounded"
+          className="md:hidden fixed top-4 left-4 z-50 text-fg bg-surface/80 backdrop-blur-md border border-line w-11 h-11 rounded-lg flex items-center justify-center"
           onClick={() => onToggle(true)}
+          aria-label="Open menu"
         >
-          <i className="fas fa-bars text-xl"></i>
+          <i className="fas fa-bars text-lg"></i>
         </button>
       )}
     </>

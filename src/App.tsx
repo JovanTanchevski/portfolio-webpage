@@ -34,7 +34,7 @@ function App() {
   const renderSection = () => {
     switch (currentSection) {
       case 'home':
-        return <Home />;
+        return <Home onNavigate={handleSectionChange} />;
       // case 'projects':
       //   return <Projects />;
       case 'info':
@@ -44,7 +44,7 @@ function App() {
       case 'faq':
         return <FAQ />;
       default:
-        return <Home />;
+        return <Home onNavigate={handleSectionChange} />;
     }
   };
 

@@ -96,30 +96,30 @@ function FAQChat() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 bg-white bg-opacity-10 hover:bg-opacity-20 backdrop-blur-md border border-gray-800 rounded-full p-4 z-50 transition-all duration-200 shadow-lg"
+          className="fixed bottom-6 right-6 bg-accent text-canvas hover:opacity-90 rounded-full w-14 h-14 flex items-center justify-center z-50 transition-opacity duration-200 shadow-lg"
         >
-          <i className="fas fa-comments text-2xl text-white"></i>
+          <i className="fas fa-comments text-xl"></i>
         </button>
       )}
 
       {/* Chat bubble - appears when open */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-80 md:w-96 h-96 bg-black bg-opacity-90 backdrop-blur-md border border-gray-800 rounded-lg shadow-2xl z-50 flex flex-col">
+        <div className="fixed bottom-6 right-6 w-80 md:w-96 h-96 bg-surface/95 backdrop-blur-xl border border-line rounded-2xl shadow-2xl z-50 flex flex-col">
           {/* Chat header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-800">
-            <h3 className="font-mono font-bold text-white">FAQ Chat</h3>
+          <div className="flex items-center justify-between p-4 border-b border-line">
+            <h3 className="font-semibold text-fg">FAQ Chat</h3>
             <div className="flex items-center space-x-4">
               {messages.length > 0 && (
                 <button
                   onClick={handleClear}
-                  className="text-gray-400 hover:text-white transition-colors font-mono text-xs"
+                  className="text-muted hover:text-fg transition-colors text-xs"
                 >
                   Clear
                 </button>
               )}
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-muted hover:text-fg transition-colors"
               >
                 <i className="fas fa-times"></i>
               </button>
@@ -129,7 +129,7 @@ function FAQChat() {
           {/* Messages area */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.length === 0 && (
-              <div className="text-center text-gray-400 font-mono text-sm mt-8">
+              <div className="text-center text-muted text-sm mt-8">
                 Ask me anything about my work, skills, or background!
               </div>
             )}
@@ -139,10 +139,10 @@ function FAQChat() {
                 className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] rounded p-3 font-mono text-sm ${
+                  className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${
                     msg.type === 'user'
-                      ? 'bg-white bg-opacity-20 text-white'
-                      : 'bg-white bg-opacity-10 text-gray-300'
+                      ? 'bg-accent text-canvas rounded-br-sm'
+                      : 'bg-fg/5 text-fg rounded-bl-sm'
                   }`}
                 >
                   {msg.text}
@@ -151,7 +151,7 @@ function FAQChat() {
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-white bg-opacity-10 rounded p-3 font-mono text-sm text-gray-300">
+                <div className="bg-fg/5 rounded-2xl rounded-bl-sm px-4 py-2.5 text-sm text-muted">
                   Thinking...
                 </div>
               </div>
@@ -160,7 +160,7 @@ function FAQChat() {
           </div>
 
           {/* Input area */}
-          <div className="p-4 border-t border-gray-800">
+          <div className="p-4 border-t border-line">
             <div className="flex space-x-2">
               <input
                 ref={inputRef}
@@ -169,13 +169,13 @@ function FAQChat() {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your question..."
-                className="flex-1 bg-white bg-opacity-10 border border-gray-800 rounded px-3 py-2 text-white font-mono text-sm placeholder-gray-500 focus:outline-none focus:border-gray-600"
+                className="flex-1 bg-fg/5 border border-line rounded-lg px-3 py-2 text-fg text-sm placeholder:text-muted focus:outline-none focus:border-accent"
                 disabled={isLoading}
               />
               <button
                 onClick={handleSendMessage}
                 disabled={isLoading || !inputValue.trim()}
-                className="bg-white bg-opacity-10 hover:bg-opacity-20 border border-gray-800 rounded px-4 py-2 text-white font-mono text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-accent text-canvas hover:opacity-90 rounded-lg px-4 py-2 text-sm font-medium transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Send
               </button>
