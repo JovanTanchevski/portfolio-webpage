@@ -38,7 +38,25 @@ function findBestAnswer(message: string): string | null {
 export class LocalFaqProvider implements AnswerProvider {
   readonly name = 'local';
 
-  async answer(message: string, _history: ChatMessage[]): Promise<string> {
-    return findBestAnswer(message) ?? FALLBACK_ANSWER;
+  async answer(message: string, history: ChatMessage[]): Promise<string> {
+    const direct = findBestAnswer(message);
+    if (direct) return direct;
+
+    // Follow-ups like "and where?" or "tell me more" have no keywords of their own,
+    // so retry with the previous user question as context.
+    const lastQuestion = [...history].reverse().find((m) => m.role === 'user');
+    if (lastQuestion) {
+      if (/\b(more|else|another|elaborate|details?)\b/i.test(message)) {
+        const lastAnswer = [...history].reverse().find((m) => m.role === 'assistant');
+        if (lastAnswer) {
+          return `${lastAnswer.content} You can find more on the Info page, or reach out via the Contact page.`;
+        }
+      }
+
+      const contextual = findBestAnswer(`${lastQuestion.content} ${message}`);
+      if (contextual) return contextual;
+    }
+
+    return FALLBACK_ANSWER;
   }
 }

@@ -9,6 +9,33 @@ function FAQChat() {
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
+  // Restore the conversation stored in the server session
+  useEffect(() => {
+    fetch(`${apiUrl}/api/history`, { credentials: 'include' })
+      .then((res) => (res.ok ? res.json() : { history: [] }))
+      .then((data: { history: Array<{ role: 'user' | 'assistant'; content: string }> }) => {
+        setMessages(
+          data.history.map((m) => ({
+            type: m.role === 'user' ? 'user' : 'bot',
+            text: m.content,
+          }))
+        );
+      })
+      .catch(() => {});
+  }, [apiUrl]);
+
+  // Clear the conversation on the server and locally
+  const handleClear = async () => {
+    setMessages([]);
+    try {
+      await fetch(`${apiUrl}/api/history`, { method: 'DELETE', credentials: 'include' });
+    } catch {
+      // ignore - local state is already cleared
+    }
+  };
+
   // Scroll to bottom when new messages are added
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -31,7 +58,6 @@ function FAQChat() {
     setIsLoading(true);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
       const response = await fetch(`${apiUrl}/api/ask`, {
         method: 'POST',
         credentials: 'include', // send the session cookie
@@ -42,7 +68,10 @@ function FAQChat() {
       });
 
       const data = await response.json();
-      setMessages((prev) => [...prev, { type: 'bot', text: data.answer }]);
+      setMessages((prev) => [
+        ...prev,
+        { type: 'bot', text: data.answer ?? data.error ?? 'Something went wrong.' },
+      ]);
     } catch (error) {
       console.error('Error fetching FAQ answer:', error);
       setMessages((prev) => [
@@ -79,12 +108,22 @@ function FAQChat() {
           {/* Chat header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-800">
             <h3 className="font-mono font-bold text-white">FAQ Chat</h3>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <i className="fas fa-times"></i>
-            </button>
+            <div className="flex items-center space-x-4">
+              {messages.length > 0 && (
+                <button
+                  onClick={handleClear}
+                  className="text-gray-400 hover:text-white transition-colors font-mono text-xs"
+                >
+                  Clear
+                </button>
+              )}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
           </div>
 
           {/* Messages area */}
