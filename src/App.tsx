@@ -1,13 +1,17 @@
-import { useState, useEffect } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import Sidebar from './ui/Sidebar.tsx';
-import Background from './ui/Background';
 import Home from './features/Home.tsx';
-import Projects from './features/Projects.tsx';
 import Info from './features/Info.tsx';
 import Contact from './features/Contact.tsx';
-import FAQ from './features/FAQ';
 import { Section } from './lib/types';
 import { useTheme } from './lib/hooks/useTheme';
+
+// Heavy parts are split into their own chunks and loaded on demand:
+// Three.js background, Projects, and FAQ (which includes the chat)
+const Background = lazy(() => import('./ui/Background'));
+const Projects = lazy(() => import('./features/Projects.tsx'));
+const FAQ = lazy(() => import('./features/FAQ'));
+
 
 // Main app component - handles section switching and layout
 function App() {
@@ -37,8 +41,8 @@ function App() {
     switch (currentSection) {
       case 'home':
         return <Home onNavigate={handleSectionChange} />;
-      // case 'projects':
-      //   return <Projects />;
+      case 'projects':
+        return <Projects />;
       case 'info':
         return <Info />;
       case 'contact':
@@ -53,7 +57,9 @@ function App() {
   return (
     <div className="relative w-screen h-screen overflow-hidden">
       {/* Three.js animated background */}
-      <Background />
+      <Suspense fallback={null}>
+        <Background />
+      </Suspense>
       
       {/* Sidebar navigation */}
       <Sidebar
@@ -73,7 +79,15 @@ function App() {
               isTransitioning ? 'opacity-0' : 'opacity-100'
             }`}
           >
-            {renderSection()}
+            <Suspense
+              fallback={
+                <div className="h-full flex items-center justify-center font-mono text-sm text-muted">
+                  Loading...
+                </div>
+              }
+            >
+              {renderSection()}
+            </Suspense>
           </div>
         </div>
       </main>
