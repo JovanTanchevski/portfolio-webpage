@@ -3,7 +3,7 @@ import { LlmProvider } from './llmProvider.js';
 import type { AnswerProvider, ChatMessage } from './types.js';
 
 const PRESETS: Record<string, { baseUrl: string; model: string }> = {
-  groq: { baseUrl: 'https://api.groq.com/openai/v1', model: 'llama-3.1-8b-instant' },
+  groq: { baseUrl: 'https://api.groq.com/openai/v1', model: 'llama-3.3-70b-versatile' },
   gemini: {
     baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
     model: 'gemini-2.5-flash',

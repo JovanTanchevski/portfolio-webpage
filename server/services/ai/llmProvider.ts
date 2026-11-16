@@ -1,4 +1,4 @@
-import { SYSTEM_PROMPT } from './knowledge.js';
+import { buildSystemPrompt } from './knowledge.js';
 import type { AnswerProvider, ChatMessage } from './types.js';
 
 export class LlmProvider implements AnswerProvider {
@@ -21,7 +21,7 @@ export class LlmProvider implements AnswerProvider {
         max_tokens: 250,
         temperature: 0.3,
         messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'system', content: buildSystemPrompt() },
           ...history,
           { role: 'user', content: message },
         ],

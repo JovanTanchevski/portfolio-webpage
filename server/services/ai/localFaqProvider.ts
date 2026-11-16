@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import info from '../../../src/lib/data/infoData.json' with { type: 'json' };
 import type { AnswerProvider, ChatMessage, FaqItem } from './types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -40,6 +41,12 @@ export class LocalFaqProvider implements AnswerProvider {
   readonly name = 'local';
 
   async answer(message: string, history: ChatMessage[]): Promise<string> {
+    if (/\b(years?|how long)\b/i.test(message) && /\b(experience|work|working|javascript|typescript|react|developer)\b/i.test(message)) {
+      const startYear = Math.min(...info.workExperience.map((job) => Number(job.period.match(/\d{4}/)?.[0])));
+      const years = new Date().getFullYear() - startYear;
+      return `About ${years} years of professional experience, starting in ${startYear}.`;
+    }
+
     const direct = findBestAnswer(message);
     if (direct) return direct;
 
