@@ -1,9 +1,5 @@
 import 'express-session';
-
-export interface ChatMessage {
-  role: 'user' | 'assistant';
-  content: string;
-}
+import type { ChatMessage } from '../services/ai/types.js';
 
 declare module 'express-session' {
   interface SessionData {
