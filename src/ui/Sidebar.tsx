@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Section } from '../lib/types';
 import { Theme } from '../lib/hooks/useTheme';
 import sidebarData from '../lib/data/sidebarData.json';
@@ -13,6 +14,20 @@ interface SidebarProps {
 
 // Sidebar navigation component with icons and links
 function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onToggleTheme }: SidebarProps) {
+  // Swipe left on the open drawer to close it
+  const touchStartX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (deltaX < -60) onToggle(false);
+  };
+
   const handleOverlayClick = () => {
     if (isOpen) {
       onToggle(false);
@@ -40,6 +55,8 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onT
       )}
 
       <aside
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         className={`
           fixed top-0 left-0 h-full w-64 bg-surface/80 backdrop-blur-xl
           border-r border-line z-50
@@ -47,7 +64,7 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onT
           ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}
       >
-        <div className="flex flex-col h-full p-6">
+        <div className="flex flex-col h-full p-6 overflow-y-auto pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
           {/* Brand + mobile close button */}
           <div className="flex items-start justify-between mb-10">
             <div>
@@ -55,7 +72,7 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onT
               <p className="font-mono text-xs text-muted mt-1">Front-end Developer</p>
             </div>
             <button
-              className="md:hidden text-muted hover:text-fg transition-colors"
+              className="md:hidden text-muted hover:text-fg transition-colors w-11 h-11 -mt-2 -mr-3 flex items-center justify-center"
               onClick={() => onToggle(false)}
               aria-label="Close menu"
             >
@@ -115,7 +132,7 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onT
                   download={link.download}
                   aria-label={link.label}
                   title={link.label}
-                  className="flex items-center justify-center h-10 rounded-lg text-muted hover:text-accent hover:bg-fg/5 transition-colors"
+                  className="flex items-center justify-center h-11 rounded-lg text-muted hover:text-accent hover:bg-fg/5 transition-colors"
                 >
                   <i className={`${link.icon} text-base`}></i>
                 </a>
@@ -127,7 +144,7 @@ function Sidebar({ currentSection, onSectionChange, isOpen, onToggle, theme, onT
 
       {!isOpen && (
         <button
-          className="md:hidden fixed top-4 left-4 z-50 text-fg bg-surface/80 backdrop-blur-md border border-line w-11 h-11 rounded-lg flex items-center justify-center"
+          className="md:hidden fixed top-[max(1rem,env(safe-area-inset-top))] left-[max(1rem,env(safe-area-inset-left))] z-50 text-fg bg-surface/80 backdrop-blur-md border border-line w-11 h-11 rounded-lg flex items-center justify-center"
           onClick={() => onToggle(true)}
           aria-label="Open menu"
         >

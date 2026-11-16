@@ -31,6 +31,9 @@ function AnimatedMesh() {
   const mouseRef = useRef({ x: 0, y: 0 });
   const targetRotation = useRef(new Vector3(0, 0, 0));
   const accent = useAccentColor();
+  const prefersReducedMotion = useRef(
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ).current;
   const aspect = useThree((state) => state.viewport.aspect);
   // Push the ring to the right on wide screens so it frames the content instead of sitting behind it
   const offsetX = aspect > 1.2 ? 2.4 : 0;
@@ -50,7 +53,7 @@ function AnimatedMesh() {
   }, []);
 
   useFrame((_state, delta) => {
-    if (!meshRef.current) return;
+    if (!meshRef.current || prefersReducedMotion) return;
     
     timeRef.current += delta;
     const time = timeRef.current;
@@ -70,7 +73,7 @@ function AnimatedMesh() {
   });
 
   return (
-    <mesh ref={meshRef}>
+    <mesh ref={meshRef} position={[offsetX, 0, 0]}>
       <torusGeometry args={[2, 0.5, 16, 100]} />
       <meshBasicMaterial color={accent} wireframe transparent opacity={0.14} />
     </mesh>
