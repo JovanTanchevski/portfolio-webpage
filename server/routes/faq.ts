@@ -2,6 +2,7 @@ import express from 'express';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { sanitizeMessage } from '../middleware/sanitize.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -35,14 +36,9 @@ function findBestAnswer(message: string): string {
 }
 
 // POST endpoint to handle FAQ questions
-router.post('/ask', (req, res) => {
+router.post('/ask', sanitizeMessage, (req, res) => {
   try {
     const { message } = req.body;
-    
-    if (!message || typeof message !== 'string') {
-      return res.status(400).json({ error: 'Message is required' });
-    }
-    
     const answer = findBestAnswer(message);
     res.json({ answer });
   } catch (error) {
