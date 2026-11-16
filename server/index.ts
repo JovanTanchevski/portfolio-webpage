@@ -9,6 +9,8 @@ const __dirname = dirname(__filename);
 
 // Express app setup with CORS for frontend communication
 const app = express();
+// Trust the first proxy so rate limiting sees the real client IP when deployed
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3001;
 
 // Enable CORS for all routes

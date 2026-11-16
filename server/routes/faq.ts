@@ -2,6 +2,7 @@ import express from 'express';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { askRateLimiter } from '../middleware/rateLimit.js';
 import { sanitizeMessage } from '../middleware/sanitize.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -36,7 +37,7 @@ function findBestAnswer(message: string): string {
 }
 
 // POST endpoint to handle FAQ questions
-router.post('/ask', sanitizeMessage, (req, res) => {
+router.post('/ask', askRateLimiter, sanitizeMessage, (req, res) => {
   try {
     const { message } = req.body;
     const answer = findBestAnswer(message);
